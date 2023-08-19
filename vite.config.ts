@@ -7,6 +7,11 @@ import banner from 'vite-plugin-banner'
 import { createHtmlPlugin } from 'vite-plugin-html'
 import { envDir, sourceDir, manualChunks } from './scripts/build'
 import pkg from './package.json'
+import assets from 'postcss-assets'
+import pxtorem from 'postcss-pxtorem'
+import px2vw from 'postcss-px-to-viewport'
+
+// console.log(pxtoviewport());
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -101,19 +106,21 @@ export default defineConfig(({ mode }) => {
        *    2. 导入本文件 `import px2vw from 'postcss-px-to-viewport'`
        *    3. 取消下面函数的注释即可生效
        */
-      // postcss: {
-      //   plugins: [
-      //     // 使用 postcss-pxtorem
-      //     // px2rem({
-      //     //   propList: ['*'],
-      //     // }),
-      //     // 使用 postcss-px-to-viewport
-      //     // px2vw({
-      //     //   viewportWidth: 375,
-      //     //   minPixelValue: 1,
-      //     // }),
-      //   ],
-      // },
+      postcss: {
+        plugins: [
+          //     // 使用 postcss-pxtorem
+          // px2rem({
+          //   propList: ['*'],
+          // }),
+          // 使用 postcss-px-to-viewport
+          px2vw({
+            viewportWidth: 1334,
+          }),
+          assets({
+            loadPaths: ['./src/assets/img'],
+          }),
+        ],
+      },
     },
 
     plugins: [

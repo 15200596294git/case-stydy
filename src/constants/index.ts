@@ -21,3 +21,5 @@ export const APP_KEYWORDS = import.meta.env.VITE_APP_KEYWORDS
 
 // 本地存储前缀
 export const STORAGE_PREFIX = import.meta.env.VITE_STORAGE_PREFIX
+
+export * from './app'
