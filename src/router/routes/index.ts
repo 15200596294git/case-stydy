@@ -10,35 +10,41 @@ const routes: RouteRecordRaw[] = [
    */
   {
     path: '/',
+    redirect: { name: 'home' },
+  },
+  {
+    path: '/home',
     name: 'home',
-    component: () => import('@/views/home.vue'),
+    component: () => import('@/views/Home/index.vue'),
     meta: {
       title: 'Home',
     },
   },
-  /**
-   * 子路由示例
-   */
   {
-    path: '/foo',
-    name: 'foo',
-    component: () => import('@/components/TransferStation.vue'),
-    meta: {
-      title: 'Foo',
-    },
-    redirect: {
-      name: 'bar',
-    },
-    children: [
-      {
-        path: 'bar',
-        name: 'bar',
-        component: () => import('@/views/foo/bar.vue'),
-        meta: {
-          title: 'Bar',
-        },
-      },
-    ],
+    path: '/foreword',
+    name: 'foreword',
+    component: () => import('@/views/Foreword/index.vue'),
+  },
+  {
+    path: '/purest',
+    name: 'purest',
+    component: () => import('@/views/Purest/index.vue'),
+  },
+
+  {
+    path: '/suspension-island',
+    name: 'suspension-island',
+    component: () => import('@/views/SuspensionIsland/index.vue'),
+  },
+  {
+    path: '/dream-city',
+    name: 'dream-city',
+    component: () => import('@/views/DreamCity/index.vue'),
+  },
+  {
+    path: '/programming-creation',
+    name: 'programming-creation',
+    component: () => import('@/views/ProgrammingCreation/index.vue'),
   },
 ]
 
