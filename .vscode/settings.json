@@ -1,3 +1,10 @@
 {
-  "cSpell.words": ["Avenir", "devapi", "Pinia", "Vite", "withtypes"]
+  "cSpell.words": [
+    "Avenir",
+    "devapi",
+    "Pinia",
+    "Vite",
+    "withtypes"
+  ],
+  "testing.automaticallyOpenPeekView": "never"
 }
