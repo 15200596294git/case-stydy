@@ -25,6 +25,8 @@
   "dependencies": {
     "@bassist/progress": "^0.2.1",
     "@bassist/utils": "^0.12.0",
+    "@vitejs/plugin-vue-jsx": "^3.0.2",
+    "@vueuse/core": "^10.3.0",
     "pinia": "^2.1.6",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"

@@ -1,7 +1,9 @@
 import { banChapter } from '../common'
 import { CHAPTER__CONFIGURATION } from '@/constants'
 
-import { describe, it, expect } from 'vitest'
+import { isDef } from '../basic'
+
+import { describe, it, expect, test } from 'vitest'
 
 describe('禁用章', () => {
   it('禁用第一章', () => {
@@ -34,4 +36,16 @@ describe('禁用章', () => {
     expect(afterDispose[3].disabled).toBeTruthy()
     expect(afterDispose[4].disabled).toBeTruthy()
   })
+})
+
+//
+test('isDef', ()=> {
+  expect(isDef(null)).toBeFalsy()
+  expect(isDef(undefined)).toBeFalsy()
+  expect(isDef(true)).toBeTruthy()
+  expect(isDef(0)).toBeTruthy()
+  expect(isDef(1)).toBeTruthy()
+  expect(isDef('1')).toBeTruthy()
+  expect(isDef([])).toBeTruthy()
+  expect(isDef({})).toBeTruthy()
 })

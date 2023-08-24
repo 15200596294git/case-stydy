@@ -10,6 +10,7 @@ import pkg from './package.json'
 import assets from 'postcss-assets'
 import pxtorem from 'postcss-pxtorem'
 import px2vw from 'postcss-px-to-viewport'
+import vueJsx from '@vitejs/plugin-vue-jsx'
 
 // console.log(pxtoviewport());
 
@@ -133,7 +134,7 @@ export default defineConfig(({ mode }) => {
        * 如果需要支持 `.tsx` 组件，请安装 `@vitejs/plugin-vue-jsx` 这个包
        * 并在这里添加一个插件导入 `import vueJsx from '@vitejs/plugin-vue-jsx'`
        */
-      // vueJsx(),
+      vueJsx(),
 
       /**
        * 自动导入 API ，不用每次都 import
