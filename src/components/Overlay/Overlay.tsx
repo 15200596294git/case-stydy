@@ -11,6 +11,7 @@ import { useEventListener } from '@vueuse/core'
 
 import { isDef, extend, preventDefault } from '@/utils'
 import { getZIndexStyle } from '@/utils/format'
+import { createNamespace } from '@/utils/create'
 
 const numericProp = [Number, String]
 
@@ -21,6 +22,8 @@ const truthProp = {
 }
 
 const unknownProp = null as unknown as PropType<unknown>
+
+const [name, bem] = createNamespace('overlay')
 
 export const overlayProps = {
   show: Boolean,
@@ -55,7 +58,7 @@ const useLazyRender = (show: WatchSource<boolean | undefined>) => {
 }
 
 export default defineComponent({
-  name: 'case-overlay',
+  name: 'cs-overlay',
 
   props: overlayProps,
 
@@ -83,7 +86,7 @@ export default defineComponent({
           v-show={props.show}
           ref={root}
           style={style}
-          class={[props.className]}
+          class={[bem(),props.className]}
         >
           {slots.default?.()}
         </div>
@@ -93,7 +96,11 @@ export default defineComponent({
     useEventListener(root, 'touchmove', onTouchMove)
 
     return () => (
-      <Transition v-slots={{ default: renderOverlay }} appear></Transition>
+      <Transition
+        v-slots={{ default: renderOverlay }}
+        name="cs-fade"
+        appear
+      ></Transition>
     )
   },
 })

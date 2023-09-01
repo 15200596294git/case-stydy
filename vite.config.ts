@@ -124,6 +124,11 @@ export default defineConfig(({ mode }) => {
       },
     },
 
+    test: {
+      // globals: true,
+      environment: 'jsdom',
+    },
+
     plugins: [
       /**
        * 支持 `.vue` 文件的解析
