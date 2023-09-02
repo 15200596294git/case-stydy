@@ -1,6 +1,8 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref , onMounted} from 'vue'
 import { CHAPTER__CONFIGURATION } from '@/constants'
+
+import Overlay from '@/components/Overlay/Overlay'
 
 const chapterConfiguration = ref(CHAPTER__CONFIGURATION)
 const showExtra = (id: string) => {
@@ -10,6 +12,11 @@ const showExtra = (id: string) => {
     chapterConfiguration.value[activeIdx].isActive =
       activeIdx !== -1 ? true : false
   })
+}
+
+const touchMove = ()=> {
+  console.log('冒泡');
+
 }
 </script>
 
@@ -22,8 +29,11 @@ const showExtra = (id: string) => {
         :key="chapter.id"
         class="ml-20px first:ml-0 relative"
       >
-      <!-- content -->
-        <div @click="showExtra(chapter.id)" class="w-182px h-386px relative z-2"></div>
+        <!-- content -->
+        <div
+          @click="showExtra(chapter.id)"
+          class="w-182px h-386px relative z-2"
+        ></div>
         <img
           v-if="!chapter.isActive"
           :src="chapter.img"
@@ -41,6 +51,9 @@ const showExtra = (id: string) => {
         />
         <!-- h-32vw -->
       </div>
+    </div>
+    <div @touchmove="touchMove">
+      <Overlay show :lockScroll="true">test</Overlay>
     </div>
   </div>
 </template>

@@ -1,0 +1,11 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`lazyRender为false时，禁用懒加载 1`] = `
+"<transition-stub name=\\"cs-fade\\" appear=\\"true\\" persisted=\\"false\\" css=\\"true\\">
+  <div class=\\"cs-overlay\\" style=\\"display: none;\\">
+    <!---->
+  </div>
+</transition-stub>"
+`;
+
+exports[`应该正确的渲染传入的插槽 1`] = `"<transition-stub name=\\"cs-fade\\" appear=\\"true\\" persisted=\\"false\\" css=\\"true\\"></transition-stub>"`;

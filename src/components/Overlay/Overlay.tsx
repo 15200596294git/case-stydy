@@ -13,6 +13,8 @@ import { isDef, extend, preventDefault } from '@/utils'
 import { getZIndexStyle } from '@/utils/format'
 import { createNamespace } from '@/utils/create'
 
+import '../index.less'
+
 const numericProp = [Number, String]
 
 const truthProp = {
@@ -63,44 +65,52 @@ export default defineComponent({
   props: overlayProps,
 
   setup(props, { slots }) {
-    const root = ref<HTMLElement>()
     const lazyRender = useLazyRender(() => props.show || !props.lazyRender)
 
     const onTouchMove = (event: TouchEvent) => {
       if (props.lockScroll) {
-        preventDefault(event)
+
+        preventDefault(event, true)
+        console.log('aaa');
+        return false
       }
     }
 
-    const renderOverlay = lazyRender(() => {
-      const style: CSSProperties = extend(
-        getZIndexStyle(props.zIndex),
-        props.customStyle,
-      )
-      if (isDef(props.duration)) {
-        style.animationDuration = `${props.duration}s`
-      }
+    return () => {
+      const root = ref<HTMLDivElement>()
+      useEventListener(root, 'touchmove', onTouchMove, {
+        capture: false,
+        passive: false,
+      })
+
+      const renderOverlay = lazyRender(() => {
+        const style: CSSProperties = extend(
+          getZIndexStyle(props.zIndex),
+          props.customStyle,
+        )
+        if (isDef(props.duration)) {
+          style.animationDuration = `${props.duration}s`
+        }
+
+        return (
+          <div
+            v-show={props.show}
+            ref={root}
+            style={style}
+            class={[bem(), props.className]}
+          >
+            {slots.default?.()}
+          </div>
+        )
+      })
 
       return (
-        <div
-          v-show={props.show}
-          ref={root}
-          style={style}
-          class={[bem(),props.className]}
-        >
-          {slots.default?.()}
-        </div>
+        <Transition
+          v-slots={{ default: renderOverlay }}
+          name="cs-fade"
+          appear
+        ></Transition>
       )
-    })
-
-    useEventListener(root, 'touchmove', onTouchMove)
-
-    return () => (
-      <Transition
-        v-slots={{ default: renderOverlay }}
-        name="cs-fade"
-        appear
-      ></Transition>
-    )
+    }
   },
 })
