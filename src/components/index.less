@@ -12,3 +12,15 @@
   height: 100%;
   background: var(--cs-overlay-background);
 }
+
+.cs-fade-enter-active {
+  transition: opacity .3s ease-out;
+}
+.cs-fade-leave-active {
+  transition: opacity .3s ease-in;
+}
+
+.cs-fade-enter-from,
+.cs-fade-leave-to{
+  opacity: 0;
+}
