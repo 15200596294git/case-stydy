@@ -1,28 +1,81 @@
 <script setup lang="ts">
-import { ref , onMounted} from 'vue'
+import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+
 import { CHAPTER__CONFIGURATION } from '@/constants'
+import { useGlobalZIndex } from '@/composables/use-global-z-index'
+import { isDef } from '@/utils'
 
 import Overlay from '@/components/Overlay/Overlay'
 
-const chapterConfiguration = ref(CHAPTER__CONFIGURATION)
-const showExtra = (id: string) => {
-  chapterConfiguration.value.forEach((c) => {
-    const activeIdx = chapterConfiguration.value.findIndex((c) => c.id === id)
+const router = useRouter()
 
-    chapterConfiguration.value[activeIdx].isActive =
-      activeIdx !== -1 ? true : false
-  })
+const globalZIndex = useGlobalZIndex()
+
+const zIndex = ref(globalZIndex)
+
+const chapterConfiguration = ref(CHAPTER__CONFIGURATION)
+
+// 跳转到序章
+function navigateToForeword() {
+  router.push('/foreword')
 }
 
-const touchMove = ()=> {
-  console.log('冒泡');
+function navigateToCreation() {
+  router.push('/programming-createion')
+}
 
+const activeId = ref()
+// 切换面板状态
+const togglePaneById = (id?: string)=> {
+  if(!isDef(id)) {
+    if(activeId.value) {
+      togglePaneById(activeId.value)
+    }
+    return
+  }
+
+  const idx = chapterConfiguration.value.findIndex(c=> c.id === id)
+  if(idx > -1) {
+    const chapter = chapterConfiguration.value[idx]
+    activeId.value = chapter.isActive ? '' : chapter.id
+    chapter.isActive = !chapter.isActive
+  } else {
+    console.error('未找到对应id');
+
+  }
+}
+
+const showExtra = (id: string, disabled: boolean) => {
+
+  if(disabled) {
+    console.warn(`id为${id}，已被禁用！`)
+    return
+  }
+
+  if (id === 'foreword') {
+    navigateToForeword()
+    return
+  }
+
+  if (id === 'programming-creation') {
+    navigateToCreation()
+    return
+  }
+
+  showOfOverlay.value = true
+  togglePaneById(id)
+}
+
+const showOfOverlay = ref(false)
+const  onClickOverlay = ()=> {
+  showOfOverlay.value = false
+  togglePaneById()
 }
 </script>
 
 <template>
   <div class="home absolute inset-0 flex flex-col justify-center items-center">
-    <!-- <div></div> -->
     <div class="flex mt-20px">
       <div
         v-for="chapter in chapterConfiguration"
@@ -31,7 +84,7 @@ const touchMove = ()=> {
       >
         <!-- content -->
         <div
-          @click="showExtra(chapter.id)"
+          @click="showExtra(chapter.id, chapter.disabled)"
           class="w-182px h-386px relative z-2"
         ></div>
         <img
@@ -48,13 +101,13 @@ const touchMove = ()=> {
           :src="chapter.activeImg"
           class="absolute -left-30px -top-30px w-auto h-420px z-3"
           alt=""
+          :style="{ zIndex: zIndex + 1 }"
         />
         <!-- h-32vw -->
       </div>
     </div>
-    <div @touchmove="touchMove">
-      <Overlay show :lockScroll="true">test</Overlay>
-    </div>
+
+    <Overlay :show="showOfOverlay" :zIndex="zIndex" @click="onClickOverlay"  />
   </div>
 </template>
 <style scoped lang="scss">

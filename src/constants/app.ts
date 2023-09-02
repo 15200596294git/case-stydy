@@ -102,8 +102,8 @@ const CHAPTER__CONFIGURATION: ChapterConfiguration[] = [
 
 banChapter(CHAPTER__CONFIGURATION, [
   // 'purest',
-  'suspension-island',
+  // 'suspension-island',
   'dream-city',
-  'programming-creation',
+  // 'programming-creation',
 ])
 export { CHAPTER__CONFIGURATION }
